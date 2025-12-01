@@ -1,3 +1,7 @@
+$(document).keydown(function() {
+    console.log("Key detected!");
+});
+
 var userClickedPattern = []
 var gamePattern=[]
 //variable with an empty array

@@ -1,3 +1,5 @@
+console.log("jQuery:", $);
+
 $(document).keydown(function() {
     console.log("Key detected!");
 });

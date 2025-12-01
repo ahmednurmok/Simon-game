@@ -12,7 +12,7 @@ var level = 0;
 //Create a new variable called level and start at level 0.
 
 
-$(document).keypress(function() {
+$(document).keydown(function() {
     if (!started) {
       $("#level-title").text("Level " + level);
       nextSequence();
@@ -28,18 +28,16 @@ function nextSequence() {
     level ++;
     userClickedPattern = []; // resets the userClickedPattern to an empty array ready for the next level.
     $("#level-title").text("Level " + level);
-    return Math.floor(Math.random() * 4);
-    
-  
-var randomNumber = nextSequence();
+   
+    var randomNumber = Math.floor(Math.random() * 4);
 
-var randomChosenColour
 
-randomChosenColour = buttonColours[randomNumber];
+var randomChosenColour = buttonColours[randomNumber];
 
 gamePattern.push(randomChosenColour);
 
-$("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);}
+$("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
+playSound(randomChosenColour);}
 //attaches class with the random chosen colour (e.g. blue, then selects the blue button). fade is to add desired affect for the game
 
 //var audio = new Audio("sounds/" + randomChosenColour + ".mp3");  audio.play();playSound(randomChosenColour);}
@@ -49,11 +47,12 @@ $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);}
 // level ++ increments the level each time someone moves on a level. level title is changed to match level, e.g. level 1 or leverl
 
 
-$("button").on("click", function() {
+$(".btn").on("click", function() {
  var userChosenColour = $(this).attr("id");
  //'this' references the event listener (button clicked and its attribute, e.g. green)
  userClickedPattern.push(userChosenColour);
  playSound(userChosenColour);
+ animatePress(userChosenColour);
 
  checkAnswer(userClickedPattern.length-1);
 
@@ -98,7 +97,7 @@ function checkAnswer(currentLevel){
   
         console.log("wrong");
   
-      }
+      
     
       playSound('wrong');  //sound
 
@@ -109,11 +108,11 @@ function checkAnswer(currentLevel){
 
     $("#level-title").text("Game Over, Press Any Key to Restart");  //restart
     startOver(); //starts game again
-
+}
 
 };
 
-startOver(){
+function startOver(){
     level = 0;
   gamePattern = [];
   started = false;   //starts game from scratch
